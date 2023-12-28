@@ -1,6 +1,6 @@
 __pycache
 view
-haarcascade
+haarcascade/
 classifier/
 data/
 .env
