@@ -1,0 +1,7 @@
+pip install opencv-python
+pip install numpy
+pip install Pillow
+pip install pymongo
+pip install watchdog
+
+watchmedo auto-restart --directory=. --pattern="*.py" --recursive python main.py
