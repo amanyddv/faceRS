@@ -1,4 +1,3 @@
-# generate_dataset.py
 import cv2
 from tkinter import messagebox
 from db.database import Database

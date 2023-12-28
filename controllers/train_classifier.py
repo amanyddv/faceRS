@@ -1,4 +1,3 @@
-# train_classifier.py
 import os
 import cv2
 import numpy as np
@@ -36,7 +35,7 @@ class Trainer:
             user_data = {"_id": user_id, "Name": "", "Age": "", "Address": ""}
             self.db.collection.insert_one(user_data)
 
-            clf.write("classifier.xml")
+            clf.write("./classifier/classifier.xml")
             print('Training dataset completed!!!')
 
         except Exception as e:

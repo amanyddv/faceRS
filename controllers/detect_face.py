@@ -1,4 +1,3 @@
-# detect_face.py
 import cv2
 from db.database import Database
 
@@ -10,7 +9,7 @@ class FaceDetector:
         try:
             faceCascade = cv2.CascadeClassifier("./haarcascade/haarcascade_frontalface_default.xml")
             clf = cv2.face.LBPHFaceRecognizer_create()
-            clf.read("classifier.xml")
+            clf.read("./classifier/classifier.xml")
 
             video_capture = cv2.VideoCapture(0)
 
