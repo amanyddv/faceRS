@@ -3,5 +3,7 @@ pip install numpy
 pip install Pillow
 pip install pymongo
 pip install watchdog
+pip install python-dotenv
+
 
 watchmedo auto-restart --directory=. --pattern="*.py" --recursive python main.py
