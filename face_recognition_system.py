@@ -27,3 +27,4 @@ if __name__ == "__main__":
     face_recognition_system.train_classifier()
     face_recognition_system.detect_face()
     face_recognition_system.generate_dataset()
+

@@ -1,9 +1,9 @@
-pip install opencv-python
-pip install numpy
-pip install Pillow
-pip install pymongo
-pip install watchdog
-pip install python-dotenv
+opencv-python
+numpy
+Pillow
+pymongo
+watchdog 
+python-dotenv
 
+#watchmedo auto-restart --directory=. --pattern="*.py" --recursive python main.py
 
-watchmedo auto-restart --directory=. --pattern="*.py" --recursive python main.py

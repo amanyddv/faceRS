@@ -22,10 +22,12 @@ class FaceDetector:
                     cv2.rectangle(img, (x, y), (x+w, y+h), (255, 255, 255), 2)
                     id, pred = clf.predict(gray_image[y:y+h, x:x+w])
                     confidence = int(100 * (1 - pred / 300))
-
+                    print(id)
+                    print("id")
                     user = self.db.collection.find_one({"_id": id})
-                    user_name = user["Name"] if user else "UNKNOWN"
-
+                    print(user)
+                    user_name = user["Vid"] if user else "UNKNOWN"
+                    
                     if confidence > 74:
                         cv2.putText(img, user_name, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 1, cv2.LINE_AA)
                     else:

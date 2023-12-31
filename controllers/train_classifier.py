@@ -10,8 +10,12 @@ class Trainer:
 
     def train_classifier(self):
         try:
-            data_dir = "C:/Users/Aman Yadav/Desktop/FRS/data"
+            data_dir = "C:/Users/Aman Yadav/Desktop/FRS/hfd/dataset"
             path = [os.path.join(data_dir, f) for f in os.listdir(data_dir)]
+            for f in os.listdir(data_dir):
+                print(f)
+                print("\n")
+            print(path)
             faces = []
             ids = []
 
@@ -19,10 +23,10 @@ class Trainer:
                 img = Image.open(image).convert('L')
                 image_np = np.array(img, 'uint8')
                 id = int(os.path.split(image)[1].split(".")[1])
-
                 faces.append(image_np)
                 ids.append(id)
 
+            print("training")
             ids = np.array(ids)
 
             clf = cv2.face.LBPHFaceRecognizer_create()
@@ -32,8 +36,7 @@ class Trainer:
 
             user_id = user_count + 1
 
-            user_data = {"_id": user_id, "Name": "", "Age": "", "Address": ""}
-            self.db.collection.insert_one(user_data)
+
 
             clf.write("./classifier/classifier.xml")
             print('Training dataset completed!!!')

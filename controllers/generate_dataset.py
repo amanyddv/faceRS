@@ -1,4 +1,5 @@
 import cv2
+import os
 from tkinter import messagebox
 from db.database import Database
 
@@ -16,8 +17,10 @@ class DatasetGenerator:
             myresult = self.db.collection.find()
             user_id = self.db.collection.count_documents({}) + 1
 
-            user_data = {"_id": user_id, "Name": self.gui.t1.get(), "Age": self.gui.t2.get(), "Address": self.gui.t3.get()}
+            user_data = {"_id": user_id, "Name": self.gui.t1.get(), "Vid": self.gui.t2.get(), "Address": self.gui.t3.get()}
             self.db.collection.insert_one(user_data)
+            print("from db")
+            print(user_data)
 
             face_classifier = cv2.CascadeClassifier("./haarcascade/haarcascade_frontalface_default.xml")
 
@@ -34,13 +37,17 @@ class DatasetGenerator:
             cap = cv2.VideoCapture(0)
             img_id = 0
 
+            data_folder = "dataset"
+            if not os.path.exists(data_folder):
+                os.makedirs(data_folder)
+            
             while True:
                 ret, frame = cap.read()
                 if face_cropped(frame) is not None:
                     img_id += 1
                     face = cv2.resize(face_cropped(frame), (200, 200))
                     face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
-                    file_name_path = f"data/user.{user_id}.{img_id}.jpg"
+                    file_name_path = f"dataset/user.{user_id}.{img_id}.jpg"
                     cv2.imwrite(file_name_path, face)
                     cv2.putText(face, str(img_id), (50, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2)
 
