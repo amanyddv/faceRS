@@ -1,4 +1,3 @@
-# face_recognition_system.py
 from controllers.train_classifier import Trainer
 from controllers.detect_face import FaceDetector
 from controllers.generate_dataset import DatasetGenerator

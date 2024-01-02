@@ -1,11 +1,10 @@
-# gui.py
 import os
 import cv2
 import numpy as np
 from PIL import Image
 from tkinter import messagebox
 import tkinter as tk
-from tkinter import ttk
+# from tkinter import ttk
 from PIL import ImageTk
 from view.about_tab import AboutTab 
 from tkinter import ttk, filedialog, messagebox
@@ -15,7 +14,7 @@ class FaceRecognitionGUI:
     def __init__(self, system):
         self.system = system
         self.system.window = tk.Tk()
-        self.system.window.title("Face Recognition System")
+        self.system.window.title("Aadhar Crime Buster")
         self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
         self.clf = cv2.face.LBPHFaceRecognizer_create()
         self.clf.read("./classifier/classifier.xml")
@@ -25,13 +24,12 @@ class FaceRecognitionGUI:
     def create_notebook(self):
         self.notebook = ttk.Notebook(self.system.window)
 
-        # Create tabs
         self.tab_about = ttk.Frame(self.notebook)
         self.tab_detect = ttk.Frame(self.notebook)
         self.tab_generate = ttk.Frame(self.notebook)
         self.tab_search = ttk.Frame(self.notebook)
         self.tab_help = ttk.Frame(self.notebook)
-        self.tab_video = ttk.Frame(self.notebook)  # Add a new tab for video
+        self.tab_video = ttk.Frame(self.notebook)  
         self.tab_photo = ttk.Frame(self.notebook)
 
 
@@ -48,12 +46,10 @@ class FaceRecognitionGUI:
 
         about_tab = AboutTab(self.tab_about, self.system)
         about_tab.create_about_tab()
-         # Create the VideoTab content
 
         
-        # Apply a style to the notebook
         style = ttk.Style()
-        style.theme_use("clam")  # You can change "clam" to other available themes
+        style.theme_use("clam")  
         style.configure("TNotebook.Tab", background="white", foreground="black")
         style.map("TNotebook.Tab", background=[("selected", "light steel blue"), ("active", "light steel blue")])
         
@@ -63,8 +59,7 @@ class FaceRecognitionGUI:
             fill="both",
         )
 
-        # Enhance tabs
-        # self.create_about_tab()
+       
         self.create_detect_tab()
         self.create_generate_tab()
         self.create_search_tab()
@@ -80,7 +75,7 @@ class FaceRecognitionGUI:
             ret, frame = cap.read()
 
             if not ret:
-                break  # Break the loop if the video is finished
+                break 
 
             gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             faces = self.face_cascade.detectMultiScale(gray_frame, scaleFactor=1.1, minNeighbors=5)
@@ -88,7 +83,6 @@ class FaceRecognitionGUI:
             for (x, y, w, h) in faces:
                 face_roi = gray_frame[y:y + h, x:x + w]
 
-                # Predict using the trained classifier
                 label, confidence = self.clf.predict(face_roi)
 
                 user = self.system.db.collection.find_one({"_id": label})
@@ -99,9 +93,8 @@ class FaceRecognitionGUI:
 
             cv2.imshow("Video Face Recognitio", frame)
 
-            if cv2.waitKey(20) & 0xFF == ord("q"):
-                break  # Break the loop if 'q' is pressed
-
+            if cv2.waitKey(13) & 0xFF == ord("q"):
+                break  
         cap.release()
         cv2.destroyAllWindows()
 
@@ -141,7 +134,7 @@ class FaceRecognitionGUI:
     def create_search_tab(self):
         
 
-        ttk.Label(self.tab_search, text="Search Detail", font=("Arial", 18), foreground="purple").grid(row=0, column=0, columnspan=2, pady=10, sticky="w")
+        ttk.Label(self.tab_search, text="Search Detail", font=("Arial", 18), foreground="blue").grid(row=0, column=0, columnspan=2, pady=10, sticky="w")
 
         id_label = ttk.Label(self.tab_search, text="Enter ID:", font=("Arial", 14))
         id_label.grid(row=1, column=0, padx=10, pady=5, sticky="w")
@@ -190,15 +183,13 @@ class FaceRecognitionGUI:
             messagebox.showinfo('Error', 'Please enter a valid ID.')
 
     def create_help_tab(self):
-        # Widgets for the Help tab
         header_label = ttk.Label(
-            self.tab_help, text="Help", font=("Arial", 18), foreground="orange"
+            self.tab_help, text="Help", font=("Arial", 18), foreground="blue"
         )
         header_label.grid(row=0, column=0, pady=(10, 20), sticky="w")
 
-        # Help content
         help_content = (
-            "Welcome to the Face Recognition System!\n\n"
+            "Welcome to the Aadhar Crime Buster!\n\n"
             "This application allows you to perform the following tasks:\n"
             "- Detect Face: Click the 'Detect Face' button to start detecting faces using the camera.\n"
             "- Generate Dataset: Enter user details and click 'Generate Dataset' to capture images for training.\n"
@@ -212,28 +203,22 @@ class FaceRecognitionGUI:
         )
         help_label.grid(row=1, column=0, pady=(0, 20), sticky="w")
 
-        # Additional styling
 
 
     def create_detect_tab(self):
-        # Widgets for the Detect tab
         header_label = tk.Label(
             self.tab_detect, text="Detect Face", font=("Arial", 18), fg="blue",bg="gainsboro",
         )
-        header_label.pack(pady=10)  # Use pack for header_label
+        header_label.pack(pady=10) 
 
-        # Add Detect-specific widgets here
-
-        # Descriptive sentence
         description_label = tk.Label(
             self.tab_detect,
             text="Click the button below to start detecting faces.",
             font=("Arial", 12),bg="gainsboro",
             pady=5,
         )
-        description_label.pack()  # Use pack for description_label
+        description_label.pack()  
 
-        # Example button for detect_face
         btn_detect = tk.Button(
             self.tab_detect,
             text="Detect Face",
@@ -242,14 +227,12 @@ class FaceRecognitionGUI:
             fg="white",
             command=self.system.detect_face,
         )
-        btn_detect.pack(pady=10)  # Use pack for btn_detect
-
-        # Center the button on the screen
+        btn_detect.pack(pady=10)  
         screen_width = self.system.window.winfo_screenwidth()
         screen_height = self.system.window.winfo_screenheight()
 
-        button_width = 150  # Adjust the width as needed
-        button_height = 40  # Adjust the height as needed
+        button_width = 150  
+        button_height = 40  
 
         x_position = (screen_width - button_width) // 2
         y_position = (screen_height - button_height) // 2
@@ -260,48 +243,42 @@ class FaceRecognitionGUI:
 
 
     def create_generate_tab(self):
-        # Widgets for the Generate tab
         header_label = tk.Label(
             self.tab_generate, text="Generate Dataset", font=("Arial", 18), fg="blue",bg="gainsboro",
         )
         header_label.grid(row=0, column=0, pady=10)
 
-        # Name Entry
         name_label = tk.Label(self.tab_generate, text="Name:", font=("Arial", 14),bg="gainsboro")
         name_label.grid(row=1, column=0, padx=10, pady=5, sticky="e")
         self.t1 = tk.Entry(self.tab_generate, width=30, bd=5)
         self.t1.grid(row=1, column=1, padx=10, pady=5)
 
-        # Age Entry
         age_label = tk.Label(self.tab_generate, text="VID:", font=("Arial", 14),bg="gainsboro")
         age_label.grid(row=2, column=0, padx=10, pady=5, sticky="e")
         self.t2 = tk.Entry(self.tab_generate, width=30, bd=5)
         self.t2.grid(row=2, column=1, padx=10, pady=5)
 
-        # Address Entry
         address_label = tk.Label(self.tab_generate, text="Address:", font=("Arial", 14),bg="gainsboro")
         address_label.grid(row=3, column=0, padx=10, pady=5, sticky="e")
         self.t3 = tk.Entry(self.tab_generate, width=30, bd=5)
         self.t3.grid(row=3, column=1, padx=10, pady=5)
 
-        # Example button for generate_dataset
         btn_generate = tk.Button(
             self.tab_generate,
             text="Generate Dataset",
             font=("Arial", 14),
-            bg="pink",
+            bg="green",
             fg="black",
             command=self.system.generate_dataset,
         )
         btn_generate.grid(row=4, column=1, pady=10)
 
-        # Example button for train_classifier in the Generate tab
         btn_train_in_generate = tk.Button(
             self.tab_generate,
             text="Train Classifier",
             font=("Arial", 14),
-            bg="orange",
-            fg="red",
+            bg="green",
+            fg="black",
             command=self.system.train_classifier,
         )
         btn_train_in_generate.grid(row=5, column=1, pady=10)
@@ -335,7 +312,6 @@ class FaceRecognitionGUI:
             image = cv2.imread(photo_path)
             gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-            # Use the same face cascade classifier
             faces = self.face_cascade.detectMultiScale(gray_image, scaleFactor=1.1, minNeighbors=5)
 
             for (x, y, w, h) in faces:
@@ -350,7 +326,7 @@ class FaceRecognitionGUI:
                             cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 1, cv2.LINE_AA)
 
             cv2.imshow("Photo Face Recognition", image)
-            cv2.waitKey(0)  # Wait until a key is pressed
+            cv2.waitKey(13)  
             cv2.destroyAllWindows()
 
         else:
