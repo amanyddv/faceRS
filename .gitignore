@@ -1,5 +1,5 @@
 __pycache
 classifier
-dataset
+dataset/
 haarcascade
 .env
