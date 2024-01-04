@@ -5,17 +5,13 @@ from PIL import Image
 from db.database import Database
 
 class Trainer:
-    def __init__(self):
-        self.db = Database()
 
     def train_classifier(self):
         try:
             data_dir = "C:/Users/Aman Yadav/Desktop/FRS/hfd/dataset"
             path = [os.path.join(data_dir, f) for f in os.listdir(data_dir)]
-            for f in os.listdir(data_dir):
-                print(f)
-                print("\n")
-            print(path)
+            
+           
             faces = []
             ids = []
 
@@ -27,14 +23,11 @@ class Trainer:
                 ids.append(id)
 
             print("training")
+            
             ids = np.array(ids)
 
             clf = cv2.face.LBPHFaceRecognizer_create()
             clf.train(faces, ids)
-
-            user_count = self.db.collection.count_documents({})
-
-            user_id = user_count + 1
 
 
 
@@ -44,6 +37,4 @@ class Trainer:
         except Exception as e:
             print(f'Error: {str(e)}')
 
-if __name__ == "__main__":
-    trainer = Trainer()
-    trainer.train_classifier()
+

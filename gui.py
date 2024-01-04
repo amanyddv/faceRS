@@ -89,11 +89,11 @@ class FaceRecognitionGUI:
                 user_name = user["Vid"] if user else "UNKNOWN"
 
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 255), 2)
-                cv2.putText(frame, f"{user_name} ({confidence:.2f}%)", (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 1, cv2.LINE_AA)
+                cv2.putText(frame, f"{user_name} ", (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 1, cv2.LINE_AA)
 
             cv2.imshow("Video Face Recognitio", frame)
 
-            if cv2.waitKey(13) & 0xFF == ord("q"):
+            if cv2.waitKey(1)==13:
                 break  
         cap.release()
         cv2.destroyAllWindows()
@@ -268,7 +268,7 @@ class FaceRecognitionGUI:
             text="Generate Dataset",
             font=("Arial", 14),
             bg="green",
-            fg="black",
+            fg="white",
             command=self.system.generate_dataset,
         )
         btn_generate.grid(row=4, column=1, pady=10)
@@ -278,7 +278,7 @@ class FaceRecognitionGUI:
             text="Train Classifier",
             font=("Arial", 14),
             bg="green",
-            fg="black",
+            fg="white",
             command=self.system.train_classifier,
         )
         btn_train_in_generate.grid(row=5, column=1, pady=10)
@@ -322,11 +322,11 @@ class FaceRecognitionGUI:
                 user_name = user["Vid"] if user else "UNKNOWN"
 
                 cv2.rectangle(image, (x, y), (x + w, y + h), (255, 255, 255), 2)
-                cv2.putText(image, f"{user_name} ({confidence:.2f}%)", (x, y - 5),
+                cv2.putText(image, f"{user_name}", (x, y - 5),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 1, cv2.LINE_AA)
 
             cv2.imshow("Photo Face Recognition", image)
-            cv2.waitKey(13)  
+            cv2.waitKey(0)  
             cv2.destroyAllWindows()
 
         else:

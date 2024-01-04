@@ -62,8 +62,4 @@ class DatasetGenerator:
         except Exception as e:
             print(f'Error in dataset generation: {str(e)}')
 
-if __name__ == "__main__":
-    from gui import FaceRecognitionGUI
-    gui_instance = FaceRecognitionGUI(None)
-    generator = DatasetGenerator(gui_instance)
-    generator.generate_dataset()
+

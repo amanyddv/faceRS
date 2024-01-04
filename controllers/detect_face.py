@@ -44,6 +44,4 @@ class FaceDetector:
         except Exception as e:
             print(f'Error in face detection: {str(e)}')
 
-if __name__ == "__main__":
-    detector = FaceDetector()
-    detector.detect_face()
+

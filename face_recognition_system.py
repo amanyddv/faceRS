@@ -21,9 +21,5 @@ class FaceRecognitionSystem:
     def generate_dataset(self):
         self.generator.generate_dataset()
 
-if __name__ == "__main__":
-    face_recognition_system = FaceRecognitionSystem()
-    face_recognition_system.train_classifier()
-    face_recognition_system.detect_face()
-    face_recognition_system.generate_dataset()
+
 
