@@ -10,12 +10,15 @@ from view.about_tab import AboutTab
 from tkinter import ttk, filedialog, messagebox
 
 
+
 class FaceRecognitionGUI:
     def __init__(self, system):
         self.system = system
         self.system.window = tk.Tk()
         self.system.window.title("Aadhar Crime Buster")
         self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+        print(hasattr(cv2, 'face'))
+
         self.clf = cv2.face.LBPHFaceRecognizer_create()
         self.clf.read("./classifier/classifier.xml")
 
