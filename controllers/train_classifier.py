@@ -1,4 +1,5 @@
 import os
+from tkinter import messagebox
 import cv2
 import numpy as np
 from PIL import Image
@@ -8,7 +9,7 @@ class Trainer:
 
     def train_classifier(self):
         try:
-            data_dir = "C:/Users/Aman Yadav/Desktop/FRS/hfd/dataset"
+            data_dir = "D:\major project\hfd\dataset"
             path = [os.path.join(data_dir, f) for f in os.listdir(data_dir)]
             
            
@@ -33,6 +34,8 @@ class Trainer:
 
             clf.write("./classifier/classifier.xml")
             print('Training dataset completed!!!')
+            messagebox.showinfo("Result", "Training Completed")
+
 
         except Exception as e:
             print(f'Error: {str(e)}')

@@ -9,9 +9,9 @@ class AboutTab:
     def create_about_tab(self):
         about_label = tk.Label(
             self.tab_about,
-            text="Welcome to the Aadhar Crime Buster.\n"
+            text="Welcome to the Crime Buster.\n"
             "This application allows you to perform face detection, generate datasets,\n"
-            "search for student details, and more.",
+            "search for criminal details, and more.",
             font=("Arial", 14),bg="gainsboro",
         )
         about_label.pack(padx=10, pady=10)
