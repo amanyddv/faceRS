@@ -20,6 +20,7 @@ class FaceDetector:
 
                 for (x, y, w, h) in features:
                     cv2.rectangle(img, (x, y), (x+w, y+h), (255, 255, 255), 2)
+                    print(gray_image[y:y+h, x:x+w])
                     id, pred = clf.predict(gray_image[y:y+h, x:x+w])
                     confidence = int(100 * (1 - pred / 300))
                     print(id)
@@ -28,7 +29,7 @@ class FaceDetector:
                     print(user)
                     user_name = user["Vid"] if user else "UNKNOWN"
                     
-                    if confidence > 74:
+                    if confidence > 80:
                         cv2.putText(img, user_name, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 1, cv2.LINE_AA)
                     else:
                         cv2.putText(img, "UNKNOWN", (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 1, cv2.LINE_AA)

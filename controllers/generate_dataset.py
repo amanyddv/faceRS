@@ -28,6 +28,16 @@ class DatasetGenerator:
             if field_value.strip() == "":
                 messagebox.showinfo("Result", f"{field_name} cannot be empty")
                 return False
+            
+        vid = (self.gui.vid.get())
+
+        if not vid.isdigit():
+            messagebox.showinfo("Result", "VID must contain only digits")
+            return False
+
+        if len(vid) <= 5:
+            messagebox.showinfo("Result", "VID must be longer than 5 digits")
+            return False
 
         if not re.match(r"^\d{10}$", self.gui.phone.get()):
             messagebox.showinfo("Result", "Phone number must be exactly 10 digits and contain only digits")
@@ -42,7 +52,6 @@ class DatasetGenerator:
             messagebox.showinfo("Result", "DOB must be in DD/MM/YYYY format")
             return False
         
-        vid = (self.gui.vid.get())
         user = self.db.collection.find_one({"Vid": vid})
         if user:
             messagebox.showinfo("Result", "Vid is already registered")
@@ -114,7 +123,7 @@ class DatasetGenerator:
                     )
 
                     cv2.imshow("Cropped face", face)
-                    if cv2.waitKey(1) == 13 or int(img_id) == 200:
+                    if cv2.waitKey(1) == 13 or int(img_id) == 250:
                         break
 
             cap.release()
