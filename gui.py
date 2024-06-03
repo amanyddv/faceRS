@@ -15,7 +15,7 @@ class FaceRecognitionGUI:
     def __init__(self, system):
         self.system = system
         self.system.window = tk.Tk()
-        self.system.window.title("Crime Buster")
+        self.system.window.title("Aadhar : A Crime Buster")
         self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
         print(hasattr(cv2, 'face'))
 
@@ -220,7 +220,17 @@ class FaceRecognitionGUI:
 
     def search_detail(self):
         try:
-            entered_id = (self.search_id_entry.get())
+            entered_id = self.search_id_entry.get()
+
+            if not entered_id.isdigit() or len(entered_id) <= 5 or len(entered_id) >= 13:
+                if not entered_id.isdigit():
+                    messagebox.showinfo("Result", "ID must contain only digits")
+                elif len(entered_id) <= 5:
+                    messagebox.showinfo("Result", "ID must be longer than 5 digits")
+                else:
+                    messagebox.showinfo("Result", "ID must be less than 13 digits")
+                return 
+
             user = self.system.db.collection.find_one({"Vid": entered_id})
             print(user)
 
@@ -234,9 +244,18 @@ class FaceRecognitionGUI:
                 self.result_state_var.set(f"{user['State']}")
                 self.result_city_var.set(f"{user['City']}")
 
+
             else:
-                self.result_name_var.set("Name: Not Found")
-                self.result_address_var.set("Address: Not Found")
+                self.result_name_var.set('')
+                self.result_address_var.set('')
+                self.result_dob_var.set('')
+                self.result_fatherName_var.set('')
+                self.result_phone_var.set('')
+                self.result_pinCode_var.set('')
+                self.result_state_var.set('')
+                self.result_city_var.set('')
+                messagebox.showinfo("Result", "ID not found")
+
 
         except ValueError:
             messagebox.showinfo('Error', 'Please enter a valid ID.')
@@ -248,7 +267,7 @@ class FaceRecognitionGUI:
         header_label.grid(row=0, column=0, pady=(10, 20), sticky="w")
 
         help_content = (
-            "Welcome to the  Crime Buster!\n\n"
+            "Welcome to the Aadhar : A  Crime Buster!\n\n"
             "This application allows you to perform the following tasks:\n"
             "- Detect Face: Click the 'Detect Face' button to start detecting faces using the camera.\n"
             "- Generate Dataset: Enter user details and click 'Generate Dataset' to capture images for training.\n"
@@ -418,6 +437,6 @@ class FaceRecognitionGUI:
         else:
             messagebox.showinfo("Error", "Please select a photo file.")
 
-    def update_status(self, message):
-        self.status_label.config(text=message)
-        print(message)
+    # def update_status(self, message):
+    #     self.status_label.config(text=message)
+    #     print(message)

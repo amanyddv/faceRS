@@ -31,12 +31,13 @@ class DatasetGenerator:
             
         vid = (self.gui.vid.get())
 
-        if not vid.isdigit():
-            messagebox.showinfo("Result", "VID must contain only digits")
-            return False
-
-        if len(vid) <= 5:
-            messagebox.showinfo("Result", "VID must be longer than 5 digits")
+        if not vid.isdigit() or len(vid) <= 5 or len(vid) >= 13:
+            if not vid.isdigit():
+                messagebox.showinfo("Result", "VID must contain only digits")
+            elif len(vid) <= 5:
+                messagebox.showinfo("Result", "VID must be longer than 5 digits")
+            else:
+                messagebox.showinfo("Result", "VID must be less than 13 digits")
             return False
 
         if not re.match(r"^\d{10}$", self.gui.phone.get()):
@@ -123,7 +124,7 @@ class DatasetGenerator:
                     )
 
                     cv2.imshow("Cropped face", face)
-                    if cv2.waitKey(1) == 13 or int(img_id) == 250:
+                    if cv2.waitKey(1) == 13 or int(img_id) == 200:
                         break
 
             cap.release()
